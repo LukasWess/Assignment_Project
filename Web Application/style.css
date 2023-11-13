@@ -44,7 +44,6 @@ h2 {
 .buttonContainer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-top: 10px;
 }
 
@@ -56,6 +55,16 @@ h2 {
     cursor: pointer;
 }
 
+.addButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
 
-
-
+.addButtonContainer button {
+    font-family: Consolas, Arial, sans-serif; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
