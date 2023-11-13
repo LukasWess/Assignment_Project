@@ -1,7 +1,7 @@
 body {
     font-family: Calibri, Arial, sans-serif; 
     color: #212529; 
-    background-color: #f0f0f0;
+    background-color: #fff;
     margin: 0;
     padding: 0;
 }
@@ -11,7 +11,7 @@ body {
     padding: 20px;
     margin-top: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
 }
 
 h1 {
@@ -21,6 +21,7 @@ h1 {
 
 h2 {
     margin-top: 20px;
+    text-align: center;
 }
 
 
@@ -67,4 +68,42 @@ h2 {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.clearButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.clearButtonContainer button {
+    font-family: Consolas, Arial, sans-serif; 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.redButton {
+    background-color: #dc3545;
+    color: #fff; 
+}
+
+.greenButton {
+    background-color: #198754;
+    color: #fff;
+}
+
+.clockContainer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    background-color: #f8f9fa; /* adjust as needed */
+    color: #212529; /* adjust as needed */
+}
+
+#staffTable td {
+    padding: 1px;
+    text-align: center;
 }
