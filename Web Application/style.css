@@ -6,11 +6,18 @@ body {
     padding: 0;
 }
 
+#tables-container {
+    border: 2px solid #000000; /* Black border */
+    padding: 10px;
+    margin: 100px;
+}
+
 .container {
     background-color: #fff;
     padding: 20px;
     margin-top: 20px;
     border-radius: 5px;
+    
     
 }
 
@@ -115,11 +122,12 @@ h2 {
 }
 
 
-#staff-table-body tr.selected {
+
+#staffTable tr.selected td {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
-    cursor: pointer;
-    background-color: #ADD8E6; 
-    border: 2px solid #0000FF; 
-    box-shadow: 0 0 10px #9ecaed; 
+    background-color: #008000; /* Green background color */
 }
+
+
+

@@ -43,6 +43,8 @@ class DeliveryDriver extends Employee {
     }
 }
 
+var selectedStaffMember = null;
+
 $(document).ready(function() {
     $.ajax({
         url: 'https://randomuser.me/api/?results=5',
@@ -56,24 +58,36 @@ $(document).ready(function() {
                     $('<td>').text(staffMember.name),
                     $('<td>').text(staffMember.surname),
                     $('<td>').text(staffMember.email),
-                    $('<td>').text(''), // status
-                    $('<td>').text(''), // outTime
-                    $('<td>').text(''), // duration
-                    $('<td>').text(''), // expectedReturnTime
-                    $('<td>').text(''), // staffMemberIsLate
-                );
+                    $('<td>').text(staffMember.status), // status
+                    $('<td>').text(staffMember.outTime), // outTime
+                    $('<td>').text(staffMember.duration), // duration
+                    $('<td>').text(staffMember.expectedReturnTime), // expectedReturnTime
+                    $('<td>').text(staffMember.staffMemberIsLate), // staffMemberIsLate
+                ).data('staffMember', staffMember);
                 staffTable.append(tr);
             });
 
-            
-            $('#staff-table-body').on('click', 'tr', function() {
+            $('#staffTable').on('click', 'tr', function() {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
+                    selectedStaffMember = null;
                 } else {
-                    $('#staff-table-body tr').removeClass('selected');
+                    $('#staffTable tr').removeClass('selected');
                     $(this).addClass('selected');
+                    selectedStaffMember = $(this).data('staffMember');
                 }
             });
+        }
+    });
+
+    $('#in-button').on('click', function() {
+        if (selectedStaffMember) {
+            selectedStaffMember.status = 'In';
+            $('#staffTable tr.selected').children().eq(4).text('In');
+
+            // Unselect the row
+            $('#staffTable tr.selected').removeClass('selected');
+            selectedStaffMember = null;
         }
     });
 });
