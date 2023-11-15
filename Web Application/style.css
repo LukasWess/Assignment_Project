@@ -126,7 +126,7 @@ h2 {
 #staffTable tr.selected td {
     transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
-    background-color: #008000; /* Green background color */
+    background-color: #008000; 
 }
 
 
