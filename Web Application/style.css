@@ -9,7 +9,7 @@ body {
 #tables-container {
     border: 2px solid #000000; /* Black border */
     padding: 10px;
-    margin: 100px;
+    margin: 140px;
     border-radius: 15px;
 }
 
@@ -140,4 +140,13 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#companyLogo {
+    position: absolute;
+    top: 150px; /* Adjust as needed */
+    left: 300px; /* Adjust as needed */
+    height: 150px; /* Adjust as needed */
+    width: 250px; /* Adjust as needed */
+    object-fit: contain; /* This will ensure that the image scales nicely */
 }
