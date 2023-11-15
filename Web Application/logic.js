@@ -67,7 +67,7 @@ var selectedStaffMember = null;
 //this makes this code very scalable and easy to use.
 $(document).ready(function() {
     $.ajax({
-        url: 'https://randomuser.me/api/?results=5',
+        url: 'https://randomuser.me/api/?results=5 ',
         dataType: 'json',
         success: function(data) {
             var staffTable = $('#staffTable'); 
@@ -82,7 +82,7 @@ $(document).ready(function() {
                     $('<td>').text(staffMember.outTime), // outTime
                     $('<td>').text(staffMember.duration), // duration
                     $('<td>').text(staffMember.expectedReturnTime), // expectedReturnTime
-                    $('<td>').text(staffMember.staffMemberIsLate), // staffMemberIsLate
+                    
                     
                 ).data('staffMember', staffMember);
                 staffTable.append(tr);

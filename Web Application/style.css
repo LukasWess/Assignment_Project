@@ -113,7 +113,8 @@ h2 {
 
 #staffTable td {
     padding: 1px;
-    text-align: center;  
+    text-align: center;
+    vertical-align: middle;  
     
 }
 
@@ -125,9 +126,9 @@ h2 {
 
 
 #staffTable tr.selected td {
-    transform: scale(1.05);
     transition: transform 0.3s ease-in-out;
     background-color: #008000; 
+    border: 1px solid black; 
 }
 
 .rounded-image {
@@ -150,3 +151,4 @@ h2 {
     width: 250px; /* Adjust as needed */
     object-fit: contain; /* This will ensure that the image scales nicely */
 }
+
