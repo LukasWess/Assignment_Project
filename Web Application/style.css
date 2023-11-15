@@ -10,6 +10,7 @@ body {
     border: 2px solid #000000; /* Black border */
     padding: 10px;
     margin: 100px;
+    border-radius: 15px;
 }
 
 .container {
@@ -129,5 +130,14 @@ h2 {
     background-color: #008000; 
 }
 
+.rounded-image {
+    border-radius: 35%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 
-
+.modal-dialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
