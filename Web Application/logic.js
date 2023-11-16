@@ -1,14 +1,13 @@
-// Define the digitalClock function
 function digitalClock() {
     var date = new Date();
     var day = date.getDate();
-    var month = date.getMonth() + 1; // months are zero-based
+    var month = date.getMonth() + 1; 
     var year = date.getFullYear();
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var seconds = date.getSeconds();
 
-    // pad single-digit day, month, hours, minutes, and seconds with a leading zero
+   
     day = (day < 10) ? '0' + day : day;
     month = (month < 10) ? '0' + month : month;
     hours = (hours < 10) ? '0' + hours : hours;
@@ -17,14 +16,13 @@ function digitalClock() {
 
     var formattedTime = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
 
-    // ppdate the clock div
+    
     document.getElementById('clock').innerHTML = formattedTime;
 }
 
-// Call digitalClock every second
+
 setInterval(digitalClock, 1000);
 
-// Rest of your code...
 
 // Define the Employee class
 class Employee {
@@ -78,10 +76,10 @@ $(document).ready(function() {
                     $('<td>').text(staffMember.name),
                     $('<td>').text(staffMember.surname),
                     $('<td>').text(staffMember.email),
-                    $('<td>').text(staffMember.status), // status
-                    $('<td>').text(staffMember.outTime), // outTime
-                    $('<td>').text(staffMember.duration), // duration
-                    $('<td>').text(staffMember.expectedReturnTime), // expectedReturnTime
+                    $('<td>').text(staffMember.status), 
+                    $('<td>').text(staffMember.outTime), 
+                    $('<td>').text(staffMember.duration), 
+                    $('<td>').text(staffMember.expectedReturnTime), 
                     
                     
                 ).data('staffMember', staffMember);
