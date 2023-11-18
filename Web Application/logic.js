@@ -188,9 +188,7 @@ $('#in-button').on('click', function() {
 
 function checkIfStaffMemberIsLate() {
     var currentTime = new Date();
-    console.log('Current time:', currentTime);
     staffMembers.forEach(function(staffMember) {
-        console.log('Checking staff member:', staffMember.name);
         if (staffMember.status === 'Out') {
             var expectedReturnTimeParts = staffMember.expectedReturnTime.split(':');
             var expectedReturnTime = new Date();
@@ -201,7 +199,6 @@ function checkIfStaffMemberIsLate() {
             if (currentTime.getTime() > expectedReturnTime.getTime() + 1000) {
                 // Calculate how long the staff member has been out of the office
                 var minutesLate = Math.floor((currentTime.getTime() - expectedReturnTime.getTime()) / 60000);
-                console.log('Staff member is late by:', minutesLate, 'minutes');
 
                 // Update the staffMemberIsLate property
                 staffMember.staffMemberIsLate = minutesLate;
@@ -257,6 +254,94 @@ $(".dropdown-content a").click(function(event){
     $(".dropbtn").html(selectedOptionIcon); // Replace the HTML of the button with the selected option icon
     $(".dropdown-content").hide(); // Hide the dropdown
     $(".dropbtn").parent().addClass('center-icon'); // Add the 'center-icon' class to the parent td
+
+    // Save the selected vehicle and its associated SVG
+    selectedVehicle = $(this).text().trim();
+    selectedVehicleSvg = selectedOptionIcon;
 });
 
+// Define the deliveryDrivers array globally
+var deliveryDrivers = [];
 
+
+$(document).ready(function() {
+    var selectedVehicle = '';
+    var selectedVehicleSvg = '';
+
+    $(".dropdown-content a").click(function(event){
+        event.preventDefault(); // Prevent the default action
+        var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); // Get the SVG of the selected option
+        $(".dropbtn").html(selectedOptionIcon); // Replace the HTML of the button with the selected option icon
+        $(".dropdown-content").hide(); // Hide the dropdown
+        $(".dropbtn").parent().addClass('center-icon'); // Add the 'center-icon' class to the parent td
+
+        // Save the selected vehicle and its associated SVG
+        selectedVehicle = $(this).text().trim();
+        selectedVehicleSvg = selectedOptionIcon;
+    });
+
+    $('#addButton').click(function() {
+        var name = $('#nameInput').val();
+        var surname = $('#surnameInput').val();
+        var telephone = $('#telephoneInput').val();
+        var deliverAddress = $('#deliverAddressInput').val();
+        var returnTime = $('#returnTimeInput').val();
+        var vehicle = selectedVehicle;
+    
+        var errors = [];
+    
+        if (!vehicle) errors.push('Vehicle type is required.');
+        if (!name) errors.push('Name is required.');
+        if (!surname) errors.push('Surname is required.');
+        if (!telephone) errors.push('Telephone number is required.');
+        else if (telephone.length < 7) errors.push('The telephone number must be at least 7 digits.');
+        if (!deliverAddress) errors.push('Delivery address is required.');
+        if (!returnTime) errors.push('Return time is required.');
+    
+        if (errors.length > 0) {
+            // Create a new toast for displaying errors
+            var toastHTML = `
+                <div class="toast center-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="mr-auto">Error</strong>
+                        <button type="button" class="ml-2 mb-1 close" data-bs-dismiss="toast" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="toast-body">
+                        ${errors.join('<br>')}
+                    </div>
+                </div>`;
+
+            var toastElement = $(toastHTML); // Create toastElement from toastHTML
+            var toastContainer = $('[aria-live="polite"][aria-atomic="true"]');
+            toastContainer.append(toastElement);
+            toastElement = $('.toast').last();
+            toastElement.toast({ delay: 1000000 }); // Set options for the toast
+            toastElement.toast('show'); // Show the toast
+        
+        } else {
+            // Your existing code for adding a new delivery driver
+            var newDeliveryDriver = new DeliveryDriver(selectedVehicle, name, surname, telephone, deliverAddress, returnTime, false);
+            deliveryDrivers.push(newDeliveryDriver);
+    
+            var newRow = `<tr>
+                <td>${selectedVehicleSvg} ${selectedVehicle}</td>
+                <td>${name}</td>
+                <td>${surname}</td>
+                <td>${telephone}</td>
+                <td>${deliverAddress}</td>
+                <td>${returnTime}</td>
+            </tr>`;
+            $('#deliveryBoardTable tbody').append(newRow);
+    
+            $('#nameInput').val('');
+            $('#surnameInput').val('');
+            $('#telephoneInput').val('');
+            $('#deliverAddressInput').val('');
+            $('#returnTimeInput').val('');
+            selectedVehicle = '';
+            selectedVehicleSvg = '';
+        }
+    })});
+    

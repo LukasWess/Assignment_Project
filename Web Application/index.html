@@ -62,7 +62,7 @@
                                 <div class="dropdown">
                                     <button class="dropbtn">Select Vehicle<i class="arrow down"></i></button>
                                     <div class="dropdown-content">
-                                        <a href="#">
+                                        <a href="#" id="carOption">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ev-front" viewBox="0 0 16 16">
                                                 <!-- SVG path for car -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-ev-front" viewBox="0 0 16 16">
@@ -72,7 +72,7 @@
                                             </svg>
                                             Car
                                         </a>
-                                        <a href="#">
+                                        <a href="#" id="bicycleOption">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-motorcycle" viewBox="0 0 16 16">
                                                 <!-- SVG path for motorcycle -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
@@ -85,22 +85,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><input type="text"></td>
-                            <td><input type="text"></td>
-                            <td><input type="number"></td>
-                            <td><input type="text"></td>
-                            <td><input type="time"></td>
+                            <td><input type="text" id="nameInput"></td>
+                            <td><input type="text" id="surnameInput"></td>
+                            <td><input type="number" id="telephoneInput"></td>
+                            <td><input type="text" id="deliverAddressInput"></td>
+                            <td><input type="time" id="returnTimeInput"></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="addButtonContainer">
-                    <button class="greenButton">Add</button>
+                    <button class="greenButton" id="addButton">Add</button>
                 </div>
             </div>
             
             <div class="container">
                 <h2>Delivery Board</h2>
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="deliveryBoardTable">
                     <thead>
                         <tr>
                             <th>Vehicle</th>
@@ -142,7 +142,24 @@
         </div>
     </div>
 </div>
-<div id="toastContainer"></div>
+<div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+    <!-- Position it -->
+    <div style="position: absolute; top: 0; right: 0;">
+        <!-- The actual toast -->
+        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto">Error</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                <!-- Error messages will appear here -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>
 
