@@ -193,45 +193,38 @@ function checkIfStaffMemberIsLate() {
             expectedReturnTime.setHours(expectedReturnTimeParts[0]);
             expectedReturnTime.setMinutes(expectedReturnTimeParts[1]);
             expectedReturnTime.setSeconds(expectedReturnTimeParts[2] || 0);
-            console.log('Expected return time:', expectedReturnTime);
+
             if (currentTime.getTime() > expectedReturnTime.getTime() + 1000) {
                 var minutesLate = Math.floor((currentTime.getTime() - expectedReturnTime.getTime()) / 60000);
                 staffMember.staffMemberIsLate = minutesLate;
 
                 if (!staffMember.toastCreated) {
-                    
-                    var toastHTML = `
-                    <div class="toast" data-staff-id="${staffMember.id}" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="toast-header">
-                            <img src="${staffMember.picture}" class="rounded mr-2" alt="Staff Member Picture" width="30" height="30">
-                            <strong class="mr-auto">${staffMember.name} is late</strong>
-                            <button type="button" class="ml-2 mb-1 close" data-bs-dismiss="toast" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="toast-body">
-                            ${staffMember.name} is ${minutesLate} minutes late.
-                        </div>
-                    </div>`;
+                    // Update the toast elements based on the provided HTML structure
+                    $('#lateToastImage').attr('src', staffMember.picture);
+                    $('#lateToastTitle').text(staffMember.name + ' is late');
+                    $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' minutes late.');
 
-                    var toastElement = $(toastHTML); 
-                    var toastContainer = $('#toastContainer');
+                    var toastContainer = $('#lateToastContainer');
+                    var toastElement = $('#lateToast');
                     toastContainer.append(toastElement);
-                    toastElement = $('.toast').last();
-                    toastElement.toast({ delay: 10000000, autohide: false }); 
-                    toastElement.toast('show'); 
+                    toastElement.toast({ delay: 10000000, autohide: false });
+                    toastElement.toast('show');
 
                     staffMember.toastCreated = true;
                 } else {
-                    var existingToast = $('#toastContainer .toast[data-staff-id="' + staffMember.id + '"]');
-                    existingToast.find('.toast-body').text(staffMember.name + ' is ' + minutesLate + ' minutes late.');
+                    // Update the existing toast elements based on the provided HTML structure
+                    $('#lateToastImage').attr('src', staffMember.picture);
+                    $('#lateToastTitle').text(staffMember.name + ' is late');
+                    $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' minutes late.');
                 }
             }
         }
     });
 }
 
+// Call the function every second
 setInterval(checkIfStaffMemberIsLate, 1000);
+
 
 $(document).ready(function(){
     $(".dropbtn").click(function(){
