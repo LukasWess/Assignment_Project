@@ -145,10 +145,94 @@ h2 {
 
 #companyLogo {
     position: absolute;
-    top: 150px; /* Adjust as needed */
-    left: 300px; /* Adjust as needed */
-    height: 150px; /* Adjust as needed */
-    width: 250px; /* Adjust as needed */
-    object-fit: contain; /* This will ensure that the image scales nicely */
+    top: 150px; 
+    left: 300px; 
+    height: 150px; 
+    width: 250px; 
+    object-fit: contain; 
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    z-index: 1;
+    background-color: white; 
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+}
+
+.dropdown-content a {
+    display: block;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-size: 20px; 
+}
+
+.dropdown-content a svg {
+    margin-right: 10px; 
+    width: 24px; 
+    height: 24px; 
+}
+
+.dropdown-content a:hover {
+    background-color: lightblue;
+}
+
+.dropbtn {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropbtn svg {
+    width: 38px; 
+    height: 38px; 
+}
+
+.center-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropbtn i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 5px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.toast {
+    z-index: 9999;
+    background-color: #f5f5f5;
+}
+
+#toastContainer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.toast-header {
+    justify-content: space-between;
+}
+
+.toast-header img {
+    width: 50px;
+    height: 50px;
+}

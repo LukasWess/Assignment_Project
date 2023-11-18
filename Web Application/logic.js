@@ -60,9 +60,8 @@ class DeliveryDriver extends Employee {
 }
 
 var selectedStaffMember = null;
-//StaffUserGet Function doing a ajax call to the randomuser api and getting 5 random users and displaying them in a table
-//The function is creating objects and dynamicly populating the html table, changing the nr of result will change the nr of users displayed. 
-//this makes this code very scalable and easy to use.
+var staffMembers = []; // Define the staffMembers array globally
+
 $(document).ready(function() {
     $.ajax({
         url: 'https://randomuser.me/api/?results=5 ',
@@ -79,11 +78,12 @@ $(document).ready(function() {
                     $('<td>').text(staffMember.status), 
                     $('<td>').text(staffMember.outTime), 
                     $('<td>').text(staffMember.duration), 
-                    $('<td>').text(staffMember.expectedReturnTime), 
-                    
-                    
+                    $('<td>').text(staffMember.expectedReturnTime)
                 ).data('staffMember', staffMember);
                 staffTable.append(tr);
+
+                // Add the staffMember to the staffMembers array
+                staffMembers.push(staffMember);
             });
 
             $('#staffTable').on('click', 'tr', function() {
@@ -101,6 +101,8 @@ $(document).ready(function() {
 
     
 });
+
+console.log(staffMembers);
 
 $('#out-button').on('click', function() {
     if (selectedStaffMember) {
@@ -125,7 +127,27 @@ $(document).ready(function() {
             selectedStaffMember.status = 'Out';
             selectedStaffMember.outTime = hoursAndMinutes;
             selectedStaffMember.duration = Math.floor(duration / 60) + 'h ' + (duration % 60) + 'min';
-            selectedStaffMember.expectedReturnTime = expectedReturnTime.getHours() + ':' + expectedReturnTime.getMinutes();
+            var expectedReturnTime = new Date();
+            expectedReturnTime.setMinutes(expectedReturnTime.getMinutes() + duration);
+
+            // Format the expected return time
+            var expectedReturnHours = expectedReturnTime.getHours();
+            var expectedReturnMinutes = expectedReturnTime.getMinutes();
+            if (expectedReturnMinutes < 10) {
+            expectedReturnMinutes = '0' + expectedReturnMinutes;
+            }
+            var expectedReturnTimeFormatted = expectedReturnHours + ':' + expectedReturnMinutes;
+
+            // Set the expected return time
+            selectedStaffMember.expectedReturnTime = expectedReturnTimeFormatted;
+
+            // Find the index of the selected staff member in the array
+            var index = staffMembers.findIndex(staff => staff.name === selectedStaffMember.name && staff.surname === selectedStaffMember.surname);
+
+            // Update the object in the array
+            if (index !== -1) {
+                staffMembers[index] = selectedStaffMember;
+            }
 
             var selectedRow = $('#staffTable tr.selected');
             selectedRow.children().eq(4).text('Out');
@@ -139,6 +161,9 @@ $(document).ready(function() {
         }
 
         $('#durationModal').modal('hide');
+
+        // Log the staffMembers array
+        console.log(staffMembers);
     });
 });
 
@@ -160,3 +185,78 @@ $('#in-button').on('click', function() {
         selectedStaffMember = null;
     }
 });
+
+function checkIfStaffMemberIsLate() {
+    var currentTime = new Date();
+    console.log('Current time:', currentTime);
+    staffMembers.forEach(function(staffMember) {
+        console.log('Checking staff member:', staffMember.name);
+        if (staffMember.status === 'Out') {
+            var expectedReturnTimeParts = staffMember.expectedReturnTime.split(':');
+            var expectedReturnTime = new Date();
+            expectedReturnTime.setHours(expectedReturnTimeParts[0]);
+            expectedReturnTime.setMinutes(expectedReturnTimeParts[1]);
+            expectedReturnTime.setSeconds(expectedReturnTimeParts[2] || 0);
+            console.log('Expected return time:', expectedReturnTime);
+            if (currentTime.getTime() > expectedReturnTime.getTime() + 1000) {
+                // Calculate how long the staff member has been out of the office
+                var minutesLate = Math.floor((currentTime.getTime() - expectedReturnTime.getTime()) / 60000);
+                console.log('Staff member is late by:', minutesLate, 'minutes');
+
+                // Update the staffMemberIsLate property
+                staffMember.staffMemberIsLate = minutesLate;
+
+                // Check if a toast for this staff member has already been created
+                if (!staffMember.toastCreated) {
+                    // Create a new toast
+                    var toastHTML = `
+                    <div class="toast" data-staff-id="${staffMember.id}" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="${staffMember.picture}" class="rounded mr-2" alt="Staff Member Picture" width="30" height="30">
+                            <strong class="mr-auto">${staffMember.name} is late</strong>
+                            <button type="button" class="ml-2 mb-1 close" data-bs-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="toast-body">
+                            ${staffMember.name} is ${minutesLate} minutes late.
+                        </div>
+                    </div>`;
+
+                    var toastElement = $(toastHTML); // Create toastElement from toastHTML
+                    var toastContainer = $('#toastContainer');
+                    toastContainer.append(toastElement);
+                    toastElement = $('.toast').last();
+                    toastElement.toast({ delay: 10000000, autohide: false }); // Set options for the toast
+                    toastElement.toast('show'); // Show the toast
+
+                    // Update the toastCreated property
+                    staffMember.toastCreated = true;
+                } else {
+                    // Update the existing toast's text
+                    var existingToast = $('#toastContainer .toast[data-staff-id="' + staffMember.id + '"]');
+                    existingToast.find('.toast-body').text(staffMember.name + ' is ' + minutesLate + ' minutes late.');
+                }
+            }
+        }
+    });
+}
+
+// Call the function every second
+setInterval(checkIfStaffMemberIsLate, 1000);
+
+$(document).ready(function(){
+    $(".dropbtn").click(function(){
+        $(".dropdown-content").toggle();
+    });
+});
+
+$(".dropdown-content a").click(function(event){
+    event.preventDefault(); // Prevent the default action
+    var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); // Get the SVG of the selected option
+    $(".dropbtn").html(selectedOptionIcon); // Replace the HTML of the button with the selected option icon
+    $(".dropdown-content").hide(); // Hide the dropdown
+    $(".dropbtn").parent().addClass('center-icon'); // Add the 'center-icon' class to the parent td
+});
+
+
