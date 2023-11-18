@@ -60,7 +60,7 @@ class DeliveryDriver extends Employee {
 }
 
 var selectedStaffMember = null;
-var staffMembers = []; // Define the staffMembers array globally
+var staffMembers = []; 
 
 $(document).ready(function() {
     $.ajax({
@@ -121,8 +121,8 @@ $(document).ready(function() {
             var outTime = new Date();
             var expectedReturnTime = new Date(outTime.getTime() + duration * 60000);
 
-            var clockTime = document.getElementById('clock').innerHTML.split(' ')[1]; // Get the time from the digital clock
-            var hoursAndMinutes = clockTime.split(':').slice(0, 2).join(':'); // Get only the hours and minutes
+            var clockTime = document.getElementById('clock').innerHTML.split(' ')[1]; 
+            var hoursAndMinutes = clockTime.split(':').slice(0, 2).join(':'); 
 
             selectedStaffMember.status = 'Out';
             selectedStaffMember.outTime = hoursAndMinutes;
@@ -130,7 +130,6 @@ $(document).ready(function() {
             var expectedReturnTime = new Date();
             expectedReturnTime.setMinutes(expectedReturnTime.getMinutes() + duration);
 
-            // Format the expected return time
             var expectedReturnHours = expectedReturnTime.getHours();
             var expectedReturnMinutes = expectedReturnTime.getMinutes();
             if (expectedReturnMinutes < 10) {
@@ -138,13 +137,12 @@ $(document).ready(function() {
             }
             var expectedReturnTimeFormatted = expectedReturnHours + ':' + expectedReturnMinutes;
 
-            // Set the expected return time
             selectedStaffMember.expectedReturnTime = expectedReturnTimeFormatted;
 
-            // Find the index of the selected staff member in the array
+            
             var index = staffMembers.findIndex(staff => staff.name === selectedStaffMember.name && staff.surname === selectedStaffMember.surname);
 
-            // Update the object in the array
+            
             if (index !== -1) {
                 staffMembers[index] = selectedStaffMember;
             }
@@ -155,14 +153,14 @@ $(document).ready(function() {
             selectedRow.children().eq(6).text(selectedStaffMember.duration);
             selectedRow.children().eq(7).text(selectedStaffMember.expectedReturnTime);
 
-            // Unselect the row
+            
             selectedRow.removeClass('selected');
             selectedStaffMember = null;
         }
 
         $('#durationModal').modal('hide');
 
-        // Log the staffMembers array
+        
         console.log(staffMembers);
     });
 });
@@ -180,7 +178,7 @@ $('#in-button').on('click', function() {
         selectedRow.children().eq(6).text('');
         selectedRow.children().eq(7).text('');
 
-        // Unselect the row
+        
         selectedRow.removeClass('selected');
         selectedStaffMember = null;
     }
@@ -197,15 +195,11 @@ function checkIfStaffMemberIsLate() {
             expectedReturnTime.setSeconds(expectedReturnTimeParts[2] || 0);
             console.log('Expected return time:', expectedReturnTime);
             if (currentTime.getTime() > expectedReturnTime.getTime() + 1000) {
-                // Calculate how long the staff member has been out of the office
                 var minutesLate = Math.floor((currentTime.getTime() - expectedReturnTime.getTime()) / 60000);
-
-                // Update the staffMemberIsLate property
                 staffMember.staffMemberIsLate = minutesLate;
 
-                // Check if a toast for this staff member has already been created
                 if (!staffMember.toastCreated) {
-                    // Create a new toast
+                    
                     var toastHTML = `
                     <div class="toast" data-staff-id="${staffMember.id}" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="toast-header">
@@ -220,17 +214,15 @@ function checkIfStaffMemberIsLate() {
                         </div>
                     </div>`;
 
-                    var toastElement = $(toastHTML); // Create toastElement from toastHTML
+                    var toastElement = $(toastHTML); 
                     var toastContainer = $('#toastContainer');
                     toastContainer.append(toastElement);
                     toastElement = $('.toast').last();
-                    toastElement.toast({ delay: 10000000, autohide: false }); // Set options for the toast
-                    toastElement.toast('show'); // Show the toast
+                    toastElement.toast({ delay: 10000000, autohide: false }); 
+                    toastElement.toast('show'); 
 
-                    // Update the toastCreated property
                     staffMember.toastCreated = true;
                 } else {
-                    // Update the existing toast's text
                     var existingToast = $('#toastContainer .toast[data-staff-id="' + staffMember.id + '"]');
                     existingToast.find('.toast-body').text(staffMember.name + ' is ' + minutesLate + ' minutes late.');
                 }
@@ -239,7 +231,6 @@ function checkIfStaffMemberIsLate() {
     });
 }
 
-// Call the function every second
 setInterval(checkIfStaffMemberIsLate, 1000);
 
 $(document).ready(function(){
@@ -249,18 +240,18 @@ $(document).ready(function(){
 });
 
 $(".dropdown-content a").click(function(event){
-    event.preventDefault(); // Prevent the default action
-    var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); // Get the SVG of the selected option
-    $(".dropbtn").html(selectedOptionIcon); // Replace the HTML of the button with the selected option icon
-    $(".dropdown-content").hide(); // Hide the dropdown
-    $(".dropbtn").parent().addClass('center-icon'); // Add the 'center-icon' class to the parent td
+    event.preventDefault(); 
+    var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); 
+    $(".dropbtn").html(selectedOptionIcon); 
+    $(".dropdown-content").hide(); 
+    $(".dropbtn").parent().addClass('center-icon'); 
 
-    // Save the selected vehicle and its associated SVG
+    
     selectedVehicle = $(this).text().trim();
     selectedVehicleSvg = selectedOptionIcon;
 });
 
-// Define the deliveryDrivers array globally
+
 var deliveryDrivers = [];
 
 
@@ -269,13 +260,13 @@ $(document).ready(function() {
     var selectedVehicleSvg = '';
 
     $(".dropdown-content a").click(function(event){
-        event.preventDefault(); // Prevent the default action
-        var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); // Get the SVG of the selected option
-        $(".dropbtn").html(selectedOptionIcon); // Replace the HTML of the button with the selected option icon
-        $(".dropdown-content").hide(); // Hide the dropdown
-        $(".dropbtn").parent().addClass('center-icon'); // Add the 'center-icon' class to the parent td
+        event.preventDefault(); 
+        var selectedOptionIcon = $(this).find('svg').prop('outerHTML'); 
+        $(".dropbtn").html(selectedOptionIcon); 
+        $(".dropdown-content").hide(); 
+        $(".dropbtn").parent().addClass('center-icon'); 
 
-        // Save the selected vehicle and its associated SVG
+        
         selectedVehicle = $(this).text().trim();
         selectedVehicleSvg = selectedOptionIcon;
     });
@@ -299,7 +290,6 @@ $(document).ready(function() {
         if (!returnTime) errors.push('Return time is required.');
     
         if (errors.length > 0) {
-            // Create a new toast for displaying errors
             var toastHTML = `
                 <div class="toast center-toast" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
@@ -313,15 +303,15 @@ $(document).ready(function() {
                     </div>
                 </div>`;
 
-            var toastElement = $(toastHTML); // Create toastElement from toastHTML
+            var toastElement = $(toastHTML); 
             var toastContainer = $('[aria-live="polite"][aria-atomic="true"]');
             toastContainer.append(toastElement);
             toastElement = $('.toast').last();
-            toastElement.toast({ delay: 1000000 }); // Set options for the toast
-            toastElement.toast('show'); // Show the toast
+            toastElement.toast({ delay: 1000000 }); 
+            toastElement.toast('show'); 
         
         } else {
-            // Your existing code for adding a new delivery driver
+            
             var newDeliveryDriver = new DeliveryDriver(selectedVehicle, name, surname, telephone, deliverAddress, returnTime, false);
             deliveryDrivers.push(newDeliveryDriver);
     
