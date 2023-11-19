@@ -59,7 +59,7 @@ var selectedStaffMember = null;
 var staffMembers = []; 
 
 //staffUserGet function
-$(document).ready(function() {
+function StaffUserGet() {
     $.ajax({
         url: 'https://randomuser.me/api/?results=5 ',
         dataType: 'json',
@@ -95,8 +95,10 @@ $(document).ready(function() {
             });
         }
     });
+}
 
-    
+$(document).ready(function() {
+    StaffUserGet();
 });
 
 console.log(staffMembers);
