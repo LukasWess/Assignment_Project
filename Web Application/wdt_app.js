@@ -211,7 +211,7 @@ function checkIfStaffMemberIsLate() {
                     // Update the existing toast elements based on the provided HTML structure
                     $('#lateToastImage').attr('src', staffMember.picture);
                     $('#lateToastTitle').text(staffMember.name + ' is late');
-                    $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' minutes late.');
+                    $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' Minutes Out of Office.');
                 }
             }
         }
@@ -369,7 +369,6 @@ function deliveryDriverIsLate() {
                 Address: ${deliveryDriver.deliverAddress}<br>
                 Telephone: ${deliveryDriver.telephone}<br>
                 Estimated return time: ${deliveryDriver.returnTime}<br>
-                Late by: ${lateMinutes} minutes
             `);
 
             var toastContainer = $('#deliveryToastContainer');
@@ -384,3 +383,11 @@ function deliveryDriverIsLate() {
 }
 
 setInterval(deliveryDriverIsLate, 1000);
+
+$(document).ready(function(){
+    $('ul.navbar-nav li.dropdown').hover(function() {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+    }, function() {
+        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+    });
+});

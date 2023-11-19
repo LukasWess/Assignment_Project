@@ -19,7 +19,6 @@ body {
     margin-top: 20px;
     border-radius: 5px;
     
-    
 }
 
 h1 {
@@ -145,7 +144,7 @@ h2 {
 
 #companyLogo {
     position: absolute;
-    top: 150px; 
+    top: 200px; 
     left: 300px; 
     height: 150px; 
     width: 250px; 
@@ -254,6 +253,47 @@ h2 {
 
 .toast {
     font-family: consolas;
-    font-size: 16px; /* Change this to the size you want */
+    font-size: 16px; 
     border: 2px solid red
+}
+
+button {
+    transition: background-color 0.3s ease; 
+}
+
+button:hover {
+    background-color: gold;
+    cursor: pointer;
+}
+
+#deliveryBoardTable td, #deliveryBoardTable th {
+    text-align: center;
+}
+
+#deliveryBoardTable td {
+    padding: 10px;
+    vertical-align: middle;
+    font-size: 18px;  
+}
+
+#toastContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+
+.navbar {
+    font-family: 'Consolas', monospace;
+}
+
+.navbar-nav .nav-link {
+    background-color: #0e8ea8;
+    color: #fff;
+}
+
+.navbar .dropdown-menu {
+    background-color: #83d1e1;
 }
