@@ -245,3 +245,15 @@ h2 {
     transform: translate(-50%, -50%);
     z-index: 9999;
 }
+
+#deliveryBoardTable tr.selected td {
+    transition: transform 0.3s ease-in-out;
+    background-color: #008000; 
+    border: 1px solid black; 
+}
+
+.toast {
+    font-family: consolas;
+    font-size: 16px; /* Change this to the size you want */
+    border: 2px solid red
+}

@@ -20,9 +20,7 @@ function digitalClock() {
     document.getElementById('clock').innerHTML = formattedTime;
 }
 
-
 setInterval(digitalClock, 1000);
-
 
 // Define the Employee class
 class Employee {
@@ -31,7 +29,6 @@ class Employee {
         this.surname = surname;
     }
 }
-
 // Define the StaffMember class
 class StaffMember extends Employee {
     constructor(name, surname, picture, email, status, outTime, duration, expectedReturnTime, staffMemberIsLate) {
@@ -46,7 +43,6 @@ class StaffMember extends Employee {
 
     }
 }
-
 // Define the DeliveryDriver class
 class DeliveryDriver extends Employee {
     constructor(name, surname, vehicle, telephone, deliverAddress, returnTime, deliveryDriverIsLate) {
@@ -278,13 +274,13 @@ $(document).ready(function() {
         if (!name) errors.push('Name is required.');
         if (!surname) errors.push('Surname is required.');
         if (!telephone) errors.push('Telephone number is required.');
-        else if (telephone.length < 7) errors.push('The telephone number must be at least 7 digits.');
+        else if (telephone.length < 7) errors.push('The telephone number must be at least 7 digits and only Digits.');
         if (!deliverAddress) errors.push('Delivery address is required.');
         if (!returnTime) errors.push('Return time is required.');
     
         if (errors.length > 0) {
             var toastHTML = `
-                <div class="toast center-toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast center-toast" role="alert" aria-live="assertive" aria-atomic="true" id="toastContainerOne">
                     <div class="toast-header">
                         <strong class="mr-auto">Error</strong>
                         <button type="button" class="ml-2 mb-1 close" data-bs-dismiss="toast" aria-label="Close">
@@ -305,7 +301,7 @@ $(document).ready(function() {
         
         } else {
             
-            var newDeliveryDriver = new DeliveryDriver(selectedVehicle, name, surname, telephone, deliverAddress, returnTime, false);
+            var newDeliveryDriver = new DeliveryDriver(name, surname, selectedVehicle, telephone, deliverAddress, returnTime, false);
             deliveryDrivers.push(newDeliveryDriver);
     
             var newRow = `<tr>
@@ -327,4 +323,64 @@ $(document).ready(function() {
             selectedVehicleSvg = '';
         }
     })});
-    
+
+var selectedDeliveryDriverIndex = null;
+
+$('#deliveryBoardTable tbody tr').last().data('index', deliveryDrivers.length - 1);
+
+$('#deliveryBoardTable').on('click', 'tr', function() {
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+        selectedDeliveryDriverIndex = null;
+    } else {
+        $('#deliveryBoardTable tr').removeClass('selected');
+        $(this).addClass('selected');
+        selectedDeliveryDriverIndex = $(this).data('index');
+    }
+});
+
+$('#clearButton').click(function() {
+    if (selectedDeliveryDriverIndex !== null) {
+        var confirmDelete = confirm('Are you sure you want to remove this delivery driver?');
+        if (confirmDelete) {
+            $('#deliveryBoardTable tr.selected').remove();
+            deliveryDrivers.splice(selectedDeliveryDriverIndex, 1);
+            selectedDeliveryDriverIndex = null;
+        }
+    }
+});
+
+function deliveryDriverIsLate() {
+    var currentTime = new Date();
+
+    deliveryDrivers.forEach(function(deliveryDriver) {
+        var returnTimeParts = deliveryDriver.returnTime.split(':');
+        var returnTime = new Date();
+        returnTime.setHours(returnTimeParts[0]);
+        returnTime.setMinutes(returnTimeParts[1]);
+        returnTime.setSeconds(returnTimeParts[2] || 0);
+
+        if (returnTime < currentTime && !deliveryDriver.toastCreated) {
+            var lateMinutes = Math.floor((currentTime - returnTime) / 60000);
+
+            // Update the toast elements based on the provided HTML structure
+            $('#deliveryToastBody').html(`
+                Name: ${deliveryDriver.name} ${deliveryDriver.surname}<br>
+                Address: ${deliveryDriver.deliverAddress}<br>
+                Telephone: ${deliveryDriver.telephone}<br>
+                Estimated return time: ${deliveryDriver.returnTime}<br>
+                Late by: ${lateMinutes} minutes
+            `);
+
+            var toastContainer = $('#deliveryToastContainer');
+            var toastElement = $('#deliveryToast');
+            toastContainer.append(toastElement);
+            toastElement.toast({ delay: 10000000, autohide: true });
+            toastElement.toast('show');
+
+            deliveryDriver.toastCreated = true;
+        }
+    });
+}
+
+setInterval(deliveryDriverIsLate, 1000);
