@@ -12,7 +12,7 @@ This project is a web application for managing reception and delivery.
 
 ## Installation
 
-1. Clone this repository to your local machine using `git clone <repository-url>`.
+1. Clone this repository to your local machine using `git clone <https://classroom.github.com/a/BH0jS-J8>`.
 2. Navigate to the project directory.
 3. Open `index.html` in your browser.
 
