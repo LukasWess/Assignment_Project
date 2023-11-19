@@ -1,21 +1,41 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/BH0jS-J8)
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=12684177&assignment_repo_type=AssignmentRepo)
-![](http://143.42.108.232/pvt/Noroff-64.png)
-# Noroff
-# Back-end Development Year 1
-### Semester Project 1- Course Assignment 1 <sup>V4</sup>
+# WDT Reception Management Dasboard
 
-Startup repositoryfor Noroff back-end development 1 - Semester Project 1 course.
+This project is a web application for managing reception and delivery.
 
-Instruction for the course assignment is in the LMS (Moodle) system of Noroff.
-[https://lms.noroff.no](https://lms.noroff.no)
+## Directory Structure
 
-![](http://143.42.108.232/pvt/important.png)
+- `index.html`: The main HTML file for the web application.
+- `style.css`: This file contains all CSS.
+- `wdt_app.js`: This file contains all the JavaScript.
+- `images/`: This directory contains all image files.
+- `Documentation/`: Here you will find Project documentation like Jira.pdf
 
-You will not be able to make any submission after the deadline of the course assignment. Make sure to make all your commit **BEFORE** the deadline
+## Installation
 
-![](http://143.42.108.232/pvt/help_small.png)
+1. Clone this repository to your local machine using `git clone <repository-url>`.
+2. Navigate to the project directory.
+3. Open `index.html` in your browser.
 
-If you are unsure of any instructions for the course assignment, contact out to your teacher on **Microsoft Teams**.
+## Running the Application
 
-**REMEMBER** Your Moodle LMS submission must have your repository link **AND** your Github username in the text file.
+1. Open `index.html` in your browser.
+2. Interact with the application through the user interface.
+
+## External Libraries
+
+This project uses the following external libraries:
+
+- [Bootstrap](https://getbootstrap.com/): For responsive design and components like the navbar and toasts.
+- [jQuery](https://jquery.com/): For DOM manipulation and event handling.
+
+To use these libraries, include the following tags in your HTML:
+
+```html
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

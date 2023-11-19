@@ -58,6 +58,7 @@ class DeliveryDriver extends Employee {
 var selectedStaffMember = null;
 var staffMembers = []; 
 
+//staffUserGet function
 $(document).ready(function() {
     $.ajax({
         url: 'https://randomuser.me/api/?results=5 ',
@@ -106,7 +107,7 @@ $('#out-button').on('click', function() {
         $('#durationModal').modal('show');
     }
 });
-
+//StaffOut function
 $(document).ready(function() {
     $('#confirmButton').on('click', function() {
         console.log('Confirm button clicked');
@@ -160,7 +161,7 @@ $(document).ready(function() {
         console.log(staffMembers);
     });
 });
-
+//StaffIn function
 $('#in-button').on('click', function() {
     if (selectedStaffMember) {
         selectedStaffMember.status = 'In';
@@ -179,7 +180,7 @@ $('#in-button').on('click', function() {
         selectedStaffMember = null;
     }
 });
-
+//staffMemberIsLate function
 function checkIfStaffMemberIsLate() {
     var currentTime = new Date();
     staffMembers.forEach(function(staffMember) {
@@ -195,7 +196,6 @@ function checkIfStaffMemberIsLate() {
                 staffMember.staffMemberIsLate = minutesLate;
 
                 if (!staffMember.toastCreated) {
-                    // Update the toast elements based on the provided HTML structure
                     $('#lateToastImage').attr('src', staffMember.picture);
                     $('#lateToastTitle').text(staffMember.name + ' is late');
                     $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' minutes late.');
@@ -208,7 +208,6 @@ function checkIfStaffMemberIsLate() {
 
                     staffMember.toastCreated = true;
                 } else {
-                    // Update the existing toast elements based on the provided HTML structure
                     $('#lateToastImage').attr('src', staffMember.picture);
                     $('#lateToastTitle').text(staffMember.name + ' is late');
                     $('#lateToastBody').html(staffMember.name + ' is ' + minutesLate + ' Minutes Out of Office.');
@@ -218,9 +217,7 @@ function checkIfStaffMemberIsLate() {
     });
 }
 
-// Call the function every second
 setInterval(checkIfStaffMemberIsLate, 1000);
-
 
 $(document).ready(function(){
     $(".dropbtn").click(function(){
@@ -240,10 +237,9 @@ $(".dropdown-content a").click(function(event){
     selectedVehicleSvg = selectedOptionIcon;
 });
 
-
 var deliveryDrivers = [];
 
-
+//addDelivery and validateDelivery combined into one function
 $(document).ready(function() {
     var selectedVehicle = '';
     var selectedVehicleSvg = '';
@@ -349,7 +345,7 @@ $('#clearButton').click(function() {
         }
     }
 });
-
+//deliveryDriverIsLate function
 function deliveryDriverIsLate() {
     var currentTime = new Date();
 
@@ -363,7 +359,6 @@ function deliveryDriverIsLate() {
         if (returnTime < currentTime && !deliveryDriver.toastCreated) {
             var lateMinutes = Math.floor((currentTime - returnTime) / 60000);
 
-            // Update the toast elements based on the provided HTML structure
             $('#deliveryToastBody').html(`
                 Name: ${deliveryDriver.name} ${deliveryDriver.surname}<br>
                 Address: ${deliveryDriver.deliverAddress}<br>
